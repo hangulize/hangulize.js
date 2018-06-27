@@ -1,0 +1,40 @@
+language: go
+
+go:
+- '1.10.x'
+
+if: tag IS present
+
+install:
+- go get -v -t ./...
+- go get -v github.com/gobuffalo/packr/...
+- go get -v github.com/gopherjs/gopherjs
+
+script:
+- set -e
+
+  # check Hangulize version
+- |
+  source <(curl -sL https://rawgit.com/hangulize/version.sh/master/@.sh)
+  [[ "$(hangulize-version)" = "$TRAVIS_TAG" ]]
+
+  # pack bundle
+- packr -zv -i "${GOPATH}/src/github.com/hangulize/hangulize"
+
+  # js
+- mkdir -p build
+- gopherjs build -mvo "build/hangulize-${VERSION}.js"
+- rm -f build/*.js.map
+
+deploy:
+  provider: releases
+
+  file: build/*
+  file_glob: true
+  skip_cleanup: true
+
+  on:
+    tags: true
+
+  api_key:
+    secure: ZHvgDBQbPZYZvckueRsPl0T0knRd4CkGQ7ILYTXO3lMQJe+bDQnv4S6Ew4KwTMb1Y7J7Fa3fI/Um8dsbu5/14WrZOHWnVY6VWn6uPOycANPmukJvWJ2aL4g+Y1avdSAtHlLzP8ZxnvfxeaMq6+O2tvbxIp0VSdfQgco8+dRv94PHpSn7oqF+9dvIa0YyJliQJxMAazf2O9Qb1JkXZ03bLt2TBKzpAQDFCK/ZEN2aj6NzLAkLSiPI2O4I9ttb1vmdzJXCBQd5VqdOERBIsFq55jg2uRm26G7UD8gBVbwRpGjJY8D9HhoD+LLvazMABWYZSzSAsRBBAuSgDnXx0rkyNESZyoevBucPKPh8HIfN+qa8xawDtv/nEHwC4ILGIp8GaYWHlEJQi54nWeeHoSN3zTFnKMb6QdxHxnM7xwy6s6oFlnl+G5PYNKgwWi5kUOvp0JIfGu+gI3wTJGLJfPi71ZhxpX3E61KpeWU+z3yKtTVd6Ku8pjfYXIz3qxr8zqIkMDcXEjxzM2tgPY8DA+90LNxOiz6t5C02y9OJscihVbW5gJTNNQOpKfbqeEKRwJLWZV9BQn+DuZ9MCBF9bkovPaD22EzVFzwB7YRUaykLl3gsNQdcng4VvGpYjEmWjNcJOXzTqAvL3nkrcZPGBfCVR9/cnCsb0JcToaaYd2dX0CA=
