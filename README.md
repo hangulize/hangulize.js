@@ -1,6 +1,7 @@
-# js
+# hangulize.js
 
-For JavaScript build of Hangulize.
+The JavaScript build of Hangulize, compiled by
+[GopherJS](https://github.com/gopherjs/gopherjs).
 
 ## Installing Build Tools
 
