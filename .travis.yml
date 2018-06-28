@@ -23,7 +23,7 @@ script:
 
   # js
 - mkdir -p build
-- gopherjs build -mvo "build/hangulize-${VERSION}.js"
+- gopherjs build -mvo "build/hangulize-${TRAVIS_TAG}.js"
 - rm -f build/*.js.map
 
 deploy:
