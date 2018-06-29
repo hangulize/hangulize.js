@@ -18,13 +18,12 @@ script:
   source <(curl -sL https://rawgit.com/hangulize/version.sh/master/@.sh)
   [[ "$(hangulize-version)" = "$TRAVIS_TAG" ]]
 
-  # pack bundle
-- packr -zv -i "${GOPATH}/src/github.com/hangulize/hangulize"
+  # compile hangulize.js
+- make
 
-  # js
+  # move build result into build/
 - mkdir -p build
-- gopherjs build -mvo "build/hangulize-${TRAVIS_TAG}.js"
-- rm -f build/*.js.map
+- mv hangulize.js "build/hangulize-${TRAVIS_TAG}.js"
 
 deploy:
   provider: releases

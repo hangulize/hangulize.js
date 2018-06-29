@@ -3,22 +3,15 @@
 The JavaScript build of Hangulize, compiled by
 [GopherJS](https://github.com/gopherjs/gopherjs).
 
-## Installing Build Tools
+## Compiling hangulize.js
+
+You will get `hangulize.js` by:
 
 ```console
-$ go get -u github.com/gopherjs/gopherjs
-$ go get -u github.com/gobuffalo/packr/...
+$ make
 ```
 
-## Building
-
-```console
-$ go get
-$ packr -i "$GOPATH/src/github.com/hangulize/hangulize"
-$ gopherjs build -o hangulize.js
-```
-
-## Trying It
+You can try it with a GopherJS test server:
 
 ```console
 $ gopherjs serve --http ":8080"
