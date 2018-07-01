@@ -1,6 +1,6 @@
 hangulize.js: main.go ../hangulize/*.go ../hangulize/hangulize-packr.go
 	go get github.com/gopherjs/gopherjs
-	gopherjs build -o hangulize.js
+	gopherjs build -mvo hangulize.js
 
 ../hangulize/hangulize-packr.go:
 	go generate github.com/hangulize/hangulize
