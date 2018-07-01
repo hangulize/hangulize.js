@@ -3,8 +3,7 @@ hangulize.js: main.go ../hangulize/*.go ../hangulize/hangulize-packr.go
 	gopherjs build -o hangulize.js
 
 ../hangulize/hangulize-packr.go:
-	go get github.com/gobuffalo/packr/...
-	packr -i ../hangulize
+	go generate github.com/hangulize/hangulize
 
 .PHONY: clean
 clean:
