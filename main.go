@@ -52,6 +52,19 @@ func init() {
 	}
 }
 
+type jsPronouncer struct {
+	id        string
+	pronounce *js.Object
+}
+
+func (p *jsPronouncer) ID() string {
+	return p.id
+}
+
+func (p *jsPronouncer) Pronounce(word string) string {
+	return p.pronounce.Invoke(word).String()
+}
+
 func main() {
 	exports := map[string]interface{}{
 		// hangulize is the easiest way to transcribe a loanword into Hangul.
@@ -82,6 +95,15 @@ func main() {
 			_spec := spec.Get("$spec").Interface().(*hangulize.Spec)
 			h := hangulize.NewHangulizer(_spec)
 			return js.MakeWrapper(h)
+		},
+
+		"usePronouncer": func(id string, pronounce *js.Object) bool {
+			p := jsPronouncer{id, pronounce}
+			return hangulize.UsePronouncer(&p)
+		},
+
+		"unusePronouncer": func(id string) bool {
+			return hangulize.UnusePronouncer(id)
 		},
 	}
 
