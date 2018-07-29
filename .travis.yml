@@ -21,6 +21,11 @@ script:
   # compile hangulize.js
 - make
 
+  # must be smaller than 8MB
+- |
+  size="$(wc -c < hangulize.js)"
+  [[ "$size" -lt 8388608 ]]
+
   # move build result into build/
 - mkdir -p build
 - mv hangulize.js "build/hangulize-${TRAVIS_TAG}.js"
