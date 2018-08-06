@@ -19,7 +19,7 @@ func packSpec(s *hangulize.Spec) *js.Object {
 	lang.Set("english", s.Lang.English)
 	lang.Set("korean", s.Lang.Korean)
 	lang.Set("script", s.Lang.Script)
-	lang.Set("pronounce", s.Lang.Pronounce)
+	lang.Set("pronouncer", s.Lang.Pronouncer)
 
 	config := js.Global.Get("Object").New()
 	config.Set("authors", s.Config.Authors)
