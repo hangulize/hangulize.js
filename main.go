@@ -19,7 +19,7 @@ func packSpec(s *hangulize.Spec) *js.Object {
 	lang.Set("english", s.Lang.English)
 	lang.Set("korean", s.Lang.Korean)
 	lang.Set("script", s.Lang.Script)
-	lang.Set("pronouncer", s.Lang.Pronouncer)
+	lang.Set("phonemizer", s.Lang.Phonemizer)
 
 	config := js.Global.Get("Object").New()
 	config.Set("authors", s.Config.Authors)
@@ -53,17 +53,17 @@ func init() {
 	}
 }
 
-type jsPronouncer struct {
+type jsPhonemizer struct {
 	id        string
-	pronounce *js.Object
+	phonemize *js.Object
 }
 
-func (p *jsPronouncer) ID() string {
+func (p *jsPhonemizer) ID() string {
 	return p.id
 }
 
-func (p *jsPronouncer) Pronounce(word string) string {
-	return p.pronounce.Invoke(word).String()
+func (p *jsPhonemizer) Phonemize(word string) string {
+	return p.phonemize.Invoke(word).String()
 }
 
 func main() {
@@ -98,13 +98,13 @@ func main() {
 			return js.MakeWrapper(h)
 		},
 
-		"usePronouncer": func(id string, pronounce *js.Object) bool {
-			p := jsPronouncer{id, pronounce}
-			return hangulize.UsePronouncer(&p)
+		"usePhonemizer": func(id string, phonemize *js.Object) bool {
+			p := jsPhonemizer{id, phonemize}
+			return hangulize.UsePhonemizer(&p)
 		},
 
-		"unusePronouncer": func(id string) bool {
-			return hangulize.UnusePronouncer(id)
+		"unusePhonemizer": func(id string) bool {
+			return hangulize.UnusePhonemizer(id)
 		},
 	}
 
