@@ -16,7 +16,7 @@ script:
   # check Hangulize version
 - |
   source <(curl -sL https://rawgit.com/hangulize/version.sh/master/@.sh)
-  [[ "$(hangulize-version)" = "$TRAVIS_TAG" ]]
+  [[ "v$(hangulize-version)" = "$TRAVIS_TAG" ]]
 
   # compile hangulize.js
 - make
